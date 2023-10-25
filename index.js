@@ -105,13 +105,13 @@ async function run() {
       const result = await productCollection.deleteOne(query);
       res.send(result);
     });
-    //user related api
+    //user related api post
     app.post("/user", async (req, res) => {
       const user = req.body;
       const result = await usercollection.insertOne(user);
       res.send(result);
     });
-
+//  user get with email and products
     app.get("/userProduct/:email", async (req, res) => {
       const email=req.params.email;
       const query = { email: email };
@@ -119,6 +119,17 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
+
+
+//  user delete 
+app.delete('/user/:id',async(req,res)=>{
+  const id=req.params.id;
+  const query={_id: new ObjectId(id)}
+  const result= await usercollection.deleteOne(query);
+  res.send(result);
+})
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
